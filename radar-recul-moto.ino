@@ -6,8 +6,6 @@ const int CLOCK_PIN = 4;
 const int DATA_PIN = 5;
 Grove_LED_Bar bar(CLOCK_PIN, DATA_PIN, 0, LED_BAR_10); // Clock pin, Data pin, Orientation
 
-// Witness Blue LED
-const int BLUE = 9;
 // Détector HC SR04
 const int TRIGGER = 6;
 const int ECHO = 7; 
@@ -25,21 +23,12 @@ void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(ECHO, INPUT);
   pinMode(TRIGGER, OUTPUT);
-  pinMode(BLUE, OUTPUT);
-
+  
   // initialize bar led
   bar.begin();
   
   animateBarLed();
-  
-
-  //flash blue led
-  for(byte i = 0 ; i < 3 ; i++){
-    digitalWrite(BLUE, LOW);
-    delay(100);  
-    digitalWrite(BLUE, HIGH);
-    delay(100);
-  } 
+   
 }
 
 // the loop function runs over and over again forever
