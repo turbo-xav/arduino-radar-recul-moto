@@ -2,18 +2,18 @@
 #include <Grove_LED_Bar.h>
 
 //Définition for grove led bar
-const int CLOCK_PIN = 4; 
-const int DATA_PIN = 5;
+const int CLOCK_PIN = 5; 
+const int DATA_PIN = 6;
 Grove_LED_Bar bar(CLOCK_PIN, DATA_PIN, 0, LED_BAR_10); // Clock pin, Data pin, Orientation
 
 // Détector HC SR04
-const int TRIGGER = 6;
-const int ECHO = 7; 
+const int TRIGGER = 3;
+const int ECHO = 4; 
 
 //Some reference distance to alert
 const int GREEN_DIST = 70;
-const int YELLOW_DIST = 30;
-const int RED_DIST = 15;
+const int YELLOW_DIST = 25;
+const int RED_DIST = 10;
 
 // Average air sound speed 340 m/s 
 const float SOUND_SPEED = 340.0;
@@ -72,9 +72,9 @@ float readUltrasonicDistance() {
    // Sets the trigger pin to HIGH state for 10 microseconds
   digitalWrite(TRIGGER, LOW);
   digitalWrite(ECHO, LOW);
-  delay(1);
+  delay(10);
   digitalWrite(TRIGGER, HIGH);
-  delayMicroseconds(10);
+  delayMicroseconds(20);
   digitalWrite(TRIGGER, LOW);
   // Reads the echo pin, and returns the sound wave travel time in microseconds
   float pulse = pulseIn(ECHO, HIGH); 
@@ -87,7 +87,7 @@ float readUltrasonicDistance() {
 
 void displayLevelBar(int level){
   for(byte i = 0 ; i < 10 ; i++){
-      bar.setLed(10-i,(i <= level-1) ? 1 : 0); 
+      bar.setLed(10-i,(i <= level-1) ? 0.8 : 0); 
   }
 }
 
