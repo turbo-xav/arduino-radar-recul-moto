@@ -11,9 +11,8 @@ const int TRIGGER = 3;
 const int ECHO = 4; 
 
 //Some reference distance to alert
-const int GREEN_DIST = 70;
-const int YELLOW_DIST = 25;
-const int RED_DIST = 10;
+const int GREEN_DIST = 80;
+const int RED_DIST = 20;
 
 // Average air sound speed 340 m/s 
 const float SOUND_SPEED = 340.0;
