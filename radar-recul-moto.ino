@@ -18,7 +18,7 @@ Grove_LED_Bar bar(CLOCK_PIN, DATA_PIN, 0, LED_BAR_10); // Clock pin, Data pin, O
 #define NUM_OF_REGISTER_PINS NUMBER_OF_74hc595 * 8
 
 // Delay de refresh
-#define DELAY_SHORT 35 
+#define DELAY_SHORT 50 
 #define DELAY_LONG DELAY_SHORT * 5
 
 // Create an array with boolean, size of pin of 74hc595
@@ -33,7 +33,7 @@ const int TRIGGER = 3;
 const int ECHO = 4; 
 
 //Some reference distance to alert
-const int GREEN_DIST = 80;
+const int GREEN_DIST = 200;
 const int RED_DIST = 25;
 
 // Average air sound speed 340 m/s 
@@ -69,9 +69,7 @@ void setup() {
   bar.begin();
 
   // Welcome animation
-  animateBarLed();
-  delay(500);
-   
+  animateBarLed();  
 }
 
 /** 
@@ -112,12 +110,11 @@ int getLevelFromDist(float distance){
 
 void displayLevelBar(int level){
   for(byte i = 0 ; i < 10 ; i++){
-      if(i <= level - 1){
-        switchOnLed(i);
-      }else {
-        switchOffLed(i);
-      }
-      
+    if(i <= level - 1){
+      switchOnLed(i);
+    }else {
+      switchOffLed(i);
+    }  
   }
 }
 
@@ -212,76 +209,97 @@ void switchOffLeds() {
 }
 
 /**
-  * Animate Bare led
+  * Animate simple level by increasing and decreasing one by one level 
   */
-void animateBarLed() {
+
+void animateSimpleLevel() {
+  
+  switchOffLeds();
+  
   for(int i = 0 ; i < 10 ; i++){
     switchOnLed(i);
     delay(DELAY_SHORT); 
   }
 
   delay(DELAY_LONG); 
+  
   for(int i = 10 ; i > 0 ; i--){
     switchOffLed(i);
     delay(DELAY_SHORT); 
   }
 
-
   switchOffLeds();
+}
+
+/**
+  * Animate from side to center and center to side (left and right)
+  */
+
+void animateFromCenterToSideAndReverse() {
   
   int valueOn1;
   int valueOn2;
-  delay(DELAY_LONG); 
   
-  for(int cpt = 0 ; cpt < 2 ; cpt++){  
-    for(int i = 0 ; i < 5 ; i++){
-      valueOn1 = i;
-      valueOn2 = 9 - i;
+  for(int i = 0 ; i < 5 ; i++){
+    valueOn1 = i;
+    valueOn2 = 9 - i;
 
-      for(int i = 10 ; i >= 0 ; i--) { 
-        if(i == valueOn1 || i == valueOn2) {
-          switchOnLed(i);
-        } else {
-          switchOffLed(i);
-        }
+    for(int i = 10 ; i >= 0 ; i--) { 
+      if(i == valueOn1 || i == valueOn2) {
+        switchOnLed(i);
+      } else {
+        switchOffLed(i);
       }
-      delay(DELAY_SHORT); 
     }
-    delay(DELAY_LONG); 
-    
-    
+    delay(DELAY_SHORT); 
+  }
+  delay(DELAY_LONG); 
+
+  for(int i = 5 ; i >= 0 ; i--) {
+    valueOn1 = i;
+    valueOn2 = 9 - i;
+
+    for(int i = 10 ; i >= 0 ; i--) { 
+      if(i == valueOn1 || i == valueOn2) {
+        switchOnLed(i);
+      } else {
+        switchOffLed(i);
+      }
+    }
+  delay(DELAY_SHORT);
+      
+  }  
    
-    for(int i = 5 ; i >= 0 ; i--) {
-      valueOn1 = i;
-      valueOn2 = 9 - i;
-
-      for(int i = 10 ; i >= 0 ; i--) { 
-        if(i == valueOn1 || i == valueOn2) {
-          switchOnLed(i);
-        } else {
-          switchOffLed(i);
-        }
-      }
-    delay(DELAY_SHORT);
-        
-    }  
+  delay(DELAY_LONG); 
+  
+  switchOffLeds();
+ 
+  for(int i = 0 ; i < 5 ; i++){
+     valueOn1 = i;
+     valueOn2 = 9 - i;
+     switchOnLed(valueOn1);
+     switchOnLed(valueOn2);
+     delay(DELAY_SHORT);  
   }
   
   delay(DELAY_LONG); 
-  switchOffLeds();
-
-   for(int cpt = 0 ; cpt < 2 ; cpt++){  
-    for(int i = 0 ; i < 5 ; i++){
-      switchOnLed(i);
-      switchOnLed(9 - i);
-      delay(DELAY_SHORT);  
-    }
-    delay(DELAY_LONG); 
-     for(int i = 5 ; i >= 0 ; i--){
-      switchOffLed(i);
-      switchOffLed(9 - i);
-      delay(DELAY_SHORT);  
-    }
+  
+  for(int i = 5 ; i >= 0 ; i--){
+    valueOn1 = i;
+    valueOn2 = 9 - i;
+    switchOffLed(valueOn1);
+    switchOffLed(valueOn2);
+    delay(DELAY_SHORT);  
   }
-  delay(DELAY_LONG);  
+
+}
+
+/**
+  * Animate Bare led
+  */
+void animateBarLed() {
+  animateSimpleLevel();
+  delay(DELAY_LONG);
+  animateFromCenterToSideAndReverse();
+  delay(DELAY_LONG);
 }
