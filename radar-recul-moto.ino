@@ -240,57 +240,50 @@ void animateSimpleLevel() {
 void animateFromCenterToSideAndReverse() {
   int valueOn1;
   int valueOn2;
+
   
   for(int i = 0 ; i < 5 ; i++){
     valueOn1 = i;
     valueOn2 = 9 - i;
 
-    for(int i = 10 ; i >= 0 ; i--) { 
-      if(i == valueOn1 || i == valueOn2) {
-        switchOnLed(i);
-      } else {
-        switchOffLed(i);
+    for(int j = 10 ; j >= 0 ; j--) { 
+      switchOffLed(j);
+      if(j == valueOn1 || j == valueOn2) {
+        switchOnLed(j);
       }
     }
     delay(DELAY_SHORT); 
   }
   delay(DELAY_LONG); 
   
-  
- 
   for(int i = 5 ; i >= 0 ; i--) {
     valueOn1 = i;
     valueOn2 = 9 - i;
 
-    for(int i = 10 ; i >= 0 ; i--) { 
-      if(i == valueOn1 || i == valueOn2) {
-        switchOnLed(i);
-      } else {
-        switchOffLed(i);
+    for(int j = 10 ; j >= 0 ; j--) { 
+      switchOffLed(j);
+      if(j == valueOn1 || j == valueOn2) {
+        switchOnLed(j);
       }
     }
-  delay(DELAY_SHORT);
+    delay(DELAY_SHORT);
       
-  }  
-  
+  }
   
   delay(DELAY_LONG); 
-  switchOffLeds();
-
-   
-    for(int i = 0 ; i < 5 ; i++){
-      
-      switchOnLed(i);
-      switchOnLed(9 - i);
-      delay(DELAY_SHORT);  
-    }
-    delay(DELAY_LONG); 
-     for(int i = 5 ; i >= 0 ; i--){
-      switchOffLed(i);
-      switchOffLed(9 - i);
-      delay(DELAY_SHORT);  
-    }
-
+  
+  switchOffLeds();  
+  for(int i = 0 ; i < 5 ; i++){
+    switchOnLed(i);
+    switchOnLed(9 - i);
+    delay(DELAY_SHORT);  
+  }
+  delay(DELAY_LONG);   
+  for(int i = 5 ; i >= 0 ; i--){
+    switchOffLed(i);
+    switchOffLed(9 - i);
+    delay(DELAY_SHORT);  
+  }
 }
 
 /**
