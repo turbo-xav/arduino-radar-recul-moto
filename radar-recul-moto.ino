@@ -74,7 +74,8 @@ void setup() {
 
 /** 
   * the loop function runs over and over again forever 
-  */void loop() {
+  */
+void loop() {
   displayLevelBar(getLevelFromDist(readUltrasonicDistance()));
 } 
 
@@ -88,7 +89,7 @@ float readUltrasonicDistance() {
   digitalWrite(ECHO, LOW);
   delay(10);
   digitalWrite(TRIGGER, HIGH);
-  delayMicroseconds(20);
+  delayMicroseconds(10);
   digitalWrite(TRIGGER, LOW);
   // Reads the echo pin, and returns the sound wave travel time in microseconds
   float pulse = pulseIn(ECHO, HIGH); 
@@ -110,11 +111,12 @@ int getLevelFromDist(float distance){
 
 void displayLevelBar(int level){
   for(byte i = 0 ; i < 10 ; i++){
-    if(i <= level - 1){
-      switchOnLed(i);
-    }else {
-      switchOffLed(i);
-    }  
+      if(i <= level - 1){
+        switchOnLed(i);
+      }else {
+        switchOffLed(i);
+      }
+      
   }
 }
 
@@ -236,7 +238,6 @@ void animateSimpleLevel() {
   */
 
 void animateFromCenterToSideAndReverse() {
-  
   int valueOn1;
   int valueOn2;
   
@@ -254,7 +255,9 @@ void animateFromCenterToSideAndReverse() {
     delay(DELAY_SHORT); 
   }
   delay(DELAY_LONG); 
-
+  
+  
+ 
   for(int i = 5 ; i >= 0 ; i--) {
     valueOn1 = i;
     valueOn2 = 9 - i;
@@ -269,28 +272,24 @@ void animateFromCenterToSideAndReverse() {
   delay(DELAY_SHORT);
       
   }  
-   
-  delay(DELAY_LONG); 
   
+  
+  delay(DELAY_LONG); 
   switchOffLeds();
- 
-  for(int i = 0 ; i < 5 ; i++){
-     valueOn1 = i;
-     valueOn2 = 9 - i;
-     switchOnLed(valueOn1);
-     switchOnLed(valueOn2);
-     delay(DELAY_SHORT);  
-  }
-  
-  delay(DELAY_LONG); 
-  
-  for(int i = 5 ; i >= 0 ; i--){
-    valueOn1 = i;
-    valueOn2 = 9 - i;
-    switchOffLed(valueOn1);
-    switchOffLed(valueOn2);
-    delay(DELAY_SHORT);  
-  }
+
+   
+    for(int i = 0 ; i < 5 ; i++){
+      
+      switchOnLed(i);
+      switchOnLed(9 - i);
+      delay(DELAY_SHORT);  
+    }
+    delay(DELAY_LONG); 
+     for(int i = 5 ; i >= 0 ; i--){
+      switchOffLed(i);
+      switchOffLed(9 - i);
+      delay(DELAY_SHORT);  
+    }
 
 }
 
