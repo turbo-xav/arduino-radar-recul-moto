@@ -5,7 +5,7 @@
 This Arduino project is performed to create a reversing radar for a motorcycle.
 You will avoid breaking the back of the bike.
 
-- [Reversing radar for motorcycle](https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/assembly/radar-recul-moto.png)
+- <img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/assembly/radar-recul-moto.png" width="350" height="150" />
 
 ## Concents of project
 
