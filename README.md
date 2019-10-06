@@ -12,7 +12,7 @@ You can find on this repository
 - [Gerber file](https://github.com/turbo-xav/arduino-radar-recul-moto/blob/master/gerbers/Gerber_pcb%20complet%20radar%20%2B%20barre%20led_20190922212650.zip) to create a printed circuit board
 - [radar-recul-moto.ino](https://github.com/turbo-xav/arduino-radar-recul-moto/blob/master/radar-recul-moto.ino) : ARDUINO program
 - [Electronic Assembly](https://github.com/turbo-xav/arduino-radar-recul-moto/blob/master/assembly/radar-recul-moto.png) : Assembly on Tinker cad (photo)
-<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/assembly/radar-recul-moto.png" width="350" height="150" />
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/assembly/radar-recul-moto.png" width="500" height="200" />
 
 
 ## Links
