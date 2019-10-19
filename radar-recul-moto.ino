@@ -1,10 +1,11 @@
 // Library for grove led bar
-#include <Grove_LED_Bar.h>
+#include <TM1637Display.h>
 
 // Definition for grove led bar
+
 const int CLOCK_PIN = 5; 
 const int DATA_PIN = 6;
-Grove_LED_Bar bar(CLOCK_PIN, DATA_PIN, 0, LED_BAR_10); // Clock pin, Data pin, Orientation
+TM1637Display display(CLOCK_PIN, DATA_PIN);
 
 // Variable for shift register 
 #define PIN_DS 8   //pin 14  75HC595    
@@ -65,9 +66,16 @@ void setup() {
   //Initialize registers and leds
   switchOffRegisters();
   switchOffLeds();
-  // initialize bar led
-  bar.begin();
 
+  display.setBrightness(7);
+  display.clear();
+  Serial.begin(9600);
+
+  for(int i = 0 ; i <= 1000 ; i = i + 10) {
+    display.showNumberDecEx(i);
+    delay(10);
+  }
+  
   // Welcome animation
   animateBarLed();  
 }
@@ -76,7 +84,14 @@ void setup() {
   * the loop function runs over and over again forever 
   */
 void loop() {
-  displayLevelBar(getLevelFromDist(readUltrasonicDistance()));
+  float distance = readUltrasonicDistance(); 
+  distance = distance >= 450 ? 450 : distance;
+  int intDistance = (int) distance;
+  int level = getLevelFromDist(distance);
+  displayLevelBar(level);
+  delay(25);  
+  display.showNumberDecEx(intDistance,true);
+  delay(10);
 } 
 
 /**
@@ -89,7 +104,7 @@ float readUltrasonicDistance() {
   digitalWrite(ECHO, LOW);
   delay(10);
   digitalWrite(TRIGGER, HIGH);
-  delayMicroseconds(10);
+  delayMicroseconds(20);
   digitalWrite(TRIGGER, LOW);
   // Reads the echo pin, and returns the sound wave travel time in microseconds
   float pulse = pulseIn(ECHO, HIGH); 
@@ -186,7 +201,7 @@ void clearRegisters(){
 
 void switchOnLed(int led) {
   switchOnRegister(BAR_LED_PINS[led]);
-  bar.setLed(10-led,0.8);
+  
   
 }
 
@@ -196,7 +211,7 @@ void switchOnLed(int led) {
 
 void switchOffLed(int led) {
   switchOffRegister(BAR_LED_PINS[led]); 
-  bar.setLed(10-led,0);
+  
 }
 
 /**
@@ -205,9 +220,7 @@ void switchOffLed(int led) {
 
 void switchOffLeds() {
    switchOffRegisters();
-   for (int i = 1; i <= 10; i++) {
-     bar.setLed(i, 0);
-   }
+   
 }
 
 /**
