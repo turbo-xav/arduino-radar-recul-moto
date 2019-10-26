@@ -1,17 +1,10 @@
-// Library for grove led bar
-#include <Grove_LED_Bar.h>
-
-// Definition for grove led bar
-const int CLOCK_PIN = 5; 
-const int DATA_PIN = 6;
-Grove_LED_Bar bar(CLOCK_PIN, DATA_PIN, 0, LED_BAR_10); // Clock pin, Data pin, Orientation
-
 // Variable for shift register 
 #define PIN_DS 8   //pin 14  75HC595    
 #define PIN_STCP 9  //pin 12  75HC595
 #define PIN_SHCP 10 //pin 11  75HC595
 #define PIN_LED_9 11 //pin for 9th led for led barre
 #define PIN_LED_10 12 //pin for 10th led for led barre
+#define PIN_OE 13 //pin for OE 75HC595 activate shift register
 //How many shift register
 #define NUMBER_OF_74hc595 2
 // number of total register pin
@@ -24,7 +17,8 @@ Grove_LED_Bar bar(CLOCK_PIN, DATA_PIN, 0, LED_BAR_10); // Clock pin, Data pin, O
 // Create an array with boolean, size of pin of 74hc595
 boolean registers[NUM_OF_REGISTER_PINS];
 
-int BAR_LED_PINS[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }; 
+//int BAR_LED_PINS[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }; 
+int BAR_LED_PINS[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9  }; 
 
 
 
@@ -52,9 +46,12 @@ void setup() {
   pinMode(PIN_DS, OUTPUT); 
   pinMode(PIN_STCP, OUTPUT);
   pinMode(PIN_SHCP, OUTPUT);
+  pinMode(PIN_OE,OUTPUT);
+  
   digitalWrite(PIN_DS,LOW);
   digitalWrite(PIN_STCP,LOW);
   digitalWrite(PIN_SHCP,LOW);
+  digitalWrite(PIN_OE,LOW);
 
   // Led 9 & 10 on simple bar led
   pinMode(PIN_LED_9, OUTPUT);
@@ -66,11 +63,9 @@ void setup() {
   switchOffRegisters();
   switchOffLeds();
   // initialize bar led
-  bar.begin();
-
   // Welcome animation
   animateBarLed();  
-}
+  }
 
 /** 
   * the loop function runs over and over again forever 
@@ -186,7 +181,6 @@ void clearRegisters(){
 
 void switchOnLed(int led) {
   switchOnRegister(BAR_LED_PINS[led]);
-  bar.setLed(10-led,0.8);
   
 }
 
@@ -196,7 +190,7 @@ void switchOnLed(int led) {
 
 void switchOffLed(int led) {
   switchOffRegister(BAR_LED_PINS[led]); 
-  bar.setLed(10-led,0);
+  
 }
 
 /**
@@ -205,9 +199,7 @@ void switchOffLed(int led) {
 
 void switchOffLeds() {
    switchOffRegisters();
-   for (int i = 1; i <= 10; i++) {
-     bar.setLed(i, 0);
-   }
+  
 }
 
 /**
