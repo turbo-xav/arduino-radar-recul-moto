@@ -4,7 +4,7 @@
 #define PIN_SHCP 10 //pin 11  75HC595
 #define PIN_LED_9 11 //pin for 9th led for led barre
 #define PIN_LED_10 12 //pin for 10th led for led barre
-#define PIN_OE 13 //pin for OE 75HC595 activate shift register
+#define PIN_MR 13 //pin for OE 75HC595 activate shift register
 //How many shift register
 #define NUMBER_OF_74hc595 2
 // number of total register pin
@@ -46,12 +46,12 @@ void setup() {
   pinMode(PIN_DS, OUTPUT); 
   pinMode(PIN_STCP, OUTPUT);
   pinMode(PIN_SHCP, OUTPUT);
-  pinMode(PIN_OE,OUTPUT);
+  pinMode(PIN_MR,OUTPUT);
   
   digitalWrite(PIN_DS,LOW);
   digitalWrite(PIN_STCP,LOW);
   digitalWrite(PIN_SHCP,LOW);
-  digitalWrite(PIN_OE,LOW);
+  digitalWrite(PIN_MR,LOW);
 
   // Led 9 & 10 on simple bar led
   pinMode(PIN_LED_9, OUTPUT);
@@ -60,6 +60,7 @@ void setup() {
   digitalWrite(PIN_LED_10,LOW);
 
   //Initialize registers and leds
+  digitalWrite(PIN_MR,HIGH);
   switchOffRegisters();
   switchOffLeds();
   // initialize bar led
