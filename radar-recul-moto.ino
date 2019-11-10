@@ -4,7 +4,7 @@
 #define PIN_SHCP 10 //pin 11  75HC595
 #define PIN_LED_9 11 //pin for 9th led for led barre
 #define PIN_LED_10 12 //pin for 10th led for led barre
-#define PIN_MR 13 //pin for OE 75HC595 activate shift register
+#define PIN_MR 13 //pin for MR 75HC595 activate shift register
 //How many shift register
 #define NUMBER_OF_74hc595 2
 // number of total register pin
