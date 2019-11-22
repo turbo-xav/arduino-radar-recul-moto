@@ -27,7 +27,8 @@ const int TRIGGER = 3;
 const int ECHO = 4; 
 
 //Some reference distance to alert
-const int GREEN_DIST = 200;
+const int GREEN_DIST = 300;
+const int WARNING_DIST = 250;
 const int RED_DIST = 25;
 
 // Average air sound speed 340 m/s 
@@ -71,7 +72,7 @@ void setup() {
 /** 
   * the loop function runs over and over again forever 
   */
-void loop() {
+void loop() {  
   displayLevelBar(getLevelFromDist(readUltrasonicDistance()));
 } 
 
@@ -83,7 +84,7 @@ float readUltrasonicDistance() {
    // Sets the trigger pin to HIGH state for 10 microseconds
   digitalWrite(TRIGGER, LOW);
   digitalWrite(ECHO, LOW);
-  delay(10);
+  delay(20);
   digitalWrite(TRIGGER, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIGGER, LOW);
@@ -96,8 +97,10 @@ float readUltrasonicDistance() {
   * Get level between 0 & 10 from the distance measured
   */
 
-int getLevelFromDist(float distance){
-  int level = 10 - ( 10 * (distance - RED_DIST) ) / (GREEN_DIST - RED_DIST);
+int getLevelFromDist(float distance){  
+  if(distance > WARNING_DIST  && distance <= GREEN_DIST){ return 2; }
+  
+  int level = 2 + (8 - ( 8 * (distance - RED_DIST) ) / (WARNING_DIST - RED_DIST));
   return level <= 0  ? 1 : (level >= 10 ? 10 : level);
 }
 
