@@ -1,4 +1,4 @@
-// Variable for shift register 
+ // Variable for shift register 
 #define PIN_DS 8   //pin 14  75HC595    
 #define PIN_STCP 9  //pin 12  75HC595
 #define PIN_SHCP 10 //pin 11  75HC595
@@ -66,14 +66,19 @@ void setup() {
   switchOffLeds();
   // initialize bar led
   // Welcome animation
-  animateBarLed();  
+  animateBarLed();
   }
 
 /** 
   * the loop function runs over and over again forever 
   */
 void loop() {  
-  displayLevelBar(getLevelFromDist(readUltrasonicDistance()));
+  float distance = readUltrasonicDistance();
+  if(distance >= 3 && distance <= 420){
+    
+    displayLevelBar(getLevelFromDist(distance));
+  }
+  
 } 
 
 /**
