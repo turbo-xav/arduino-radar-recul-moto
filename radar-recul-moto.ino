@@ -20,19 +20,22 @@ boolean registers[NUM_OF_REGISTER_PINS];
 //int BAR_LED_PINS[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }; 
 int BAR_LED_PINS[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9  }; 
 
-
-
 // Détector HC SR04
 const int TRIGGER = 3;
 const int ECHO = 4; 
 
 //Some reference distance to alert
-const int GREEN_DIST = 300;
-const int WARNING_DIST = 250;
+const int GREEN_DIST = 400;
+const int WARNING_DIST = 300;
+const int WARNING_DIST_2 = 250;
+
 const int RED_DIST = 25;
 
 // Average air sound speed 340 m/s 
 const float SOUND_SPEED = 340.0;
+
+// Last level
+int lastLevel = 0;
 
 /** 
   * the setup function runs once when you press reset or power the board 
@@ -74,11 +77,12 @@ void setup() {
   */
 void loop() {  
   float distance = readUltrasonicDistance();
-  if(distance >= 3 && distance <= 420){
-    
+  
+  if(distance >= 3 && distance <= GREEN_DIST){    
     displayLevelBar(getLevelFromDist(distance));
   }
-  
+
+  delay(5);
 } 
 
 /**
@@ -89,7 +93,7 @@ float readUltrasonicDistance() {
    // Sets the trigger pin to HIGH state for 10 microseconds
   digitalWrite(TRIGGER, LOW);
   digitalWrite(ECHO, LOW);
-  delay(20);
+  delay(5);
   digitalWrite(TRIGGER, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIGGER, LOW);
@@ -102,10 +106,16 @@ float readUltrasonicDistance() {
   * Get level between 0 & 10 from the distance measured
   */
 
-int getLevelFromDist(float distance){  
+int getLevelFromDist(float distance){
+  // First green level 3m < distance < 4m
   if(distance > WARNING_DIST  && distance <= GREEN_DIST){ return 2; }
   
-  int level = 2 + (8 - ( 8 * (distance - RED_DIST) ) / (WARNING_DIST - RED_DIST));
+  // Second green level 2m50 < distance < 3m 
+  if(distance > WARNING_DIST_2  && distance <= WARNING_DIST){ return 3; }
+  
+  // Others levels < 2m50
+  int level = 10 -  ( 7 * (distance - RED_DIST)  / (WARNING_DIST_2 - RED_DIST) );
+  
   return level <= 0  ? 1 : (level >= 10 ? 10 : level);
 }
 
@@ -114,6 +124,12 @@ int getLevelFromDist(float distance){
   */
 
 void displayLevelBar(int level){
+  
+  if(lastLevel == level){ 
+    return; 
+  }
+ 
+  lastLevel = level;
   for(byte i = 0 ; i < 10 ; i++){
       if(i <= level - 1){
         switchOnLed(i);
