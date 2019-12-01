@@ -41,21 +41,24 @@ int lastLevel = 0;
   * the setup function runs once when you press reset or power the board 
   */
 void setup() {
+    // initialize digital pin for shift register
+  pinMode(PIN_DS, OUTPUT); 
+  pinMode(PIN_STCP, OUTPUT);
+  pinMode(PIN_SHCP, OUTPUT);
+  pinMode(PIN_MR,OUTPUT);
+
+  digitalWrite(PIN_DS,LOW);
+  digitalWrite(PIN_STCP,LOW);
+  digitalWrite(PIN_SHCP,LOW);
+  digitalWrite(PIN_MR,LOW);
+
+  
   // initialize digital pin for ultrasonic detector
   pinMode(ECHO, INPUT);
   pinMode(TRIGGER, OUTPUT);
   digitalWrite(TRIGGER,LOW);
   
-  // initialize digital pin for shift register
-  pinMode(PIN_DS, OUTPUT); 
-  pinMode(PIN_STCP, OUTPUT);
-  pinMode(PIN_SHCP, OUTPUT);
-  pinMode(PIN_MR,OUTPUT);
   
-  digitalWrite(PIN_DS,LOW);
-  digitalWrite(PIN_STCP,LOW);
-  digitalWrite(PIN_SHCP,LOW);
-  digitalWrite(PIN_MR,LOW);
 
   // Led 9 & 10 on simple bar led
   pinMode(PIN_LED_9, OUTPUT);
