@@ -25,9 +25,9 @@ const int TRIGGER = 3;
 const int ECHO = 4; 
 
 //Some reference distance to alert
-const int GREEN_DIST = 400;
-const int WARNING_DIST = 300;
-const int WARNING_DIST_2 = 250;
+const int GREEN_DIST = 250;
+const int WARNING_DIST = 200;
+const int WARNING_DIST_2 = 150;
 
 const int RED_DIST = 25;
 
@@ -73,6 +73,7 @@ void setup() {
   // initialize bar led
   // Welcome animation
   animateBarLed();
+  //Serial.begin(19200);
   }
 
 /** 
@@ -80,8 +81,8 @@ void setup() {
   */
 void loop() {  
   float distance = readUltrasonicDistance();
-  
-  if(distance >= 3){    
+  //Serial.println(distance);
+  if(distance >= 1){    
     displayLevelBar(getLevelFromDist(distance));
   }
 
@@ -110,10 +111,14 @@ float readUltrasonicDistance() {
   */
 
 int getLevelFromDist(float distance){
-  // First green level 3m < distance < 4m
+  
+  // Out of range
+  if(distance > GREEN_DIST){ return 1; }
+  
+  // First green level 2m00 < distance < 2m50
   if(distance > WARNING_DIST  && distance <= GREEN_DIST){ return 2; }
   
-  // Second green level 2m50 < distance < 3m 
+  // Second green level 1m50 < distance < 2m
   if(distance > WARNING_DIST_2  && distance <= WARNING_DIST){ return 3; }
   
   // Others levels < 2m50
