@@ -81,7 +81,7 @@ void setup() {
 void loop() {  
   float distance = readUltrasonicDistance();
   
-  if(distance >= 3 && distance <= GREEN_DIST){    
+  if(distance >= 3){    
     displayLevelBar(getLevelFromDist(distance));
   }
 
