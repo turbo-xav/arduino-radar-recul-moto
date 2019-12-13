@@ -14,10 +14,14 @@
 #define DELAY_SHORT 50 
 #define DELAY_LONG DELAY_SHORT * 5
 
+//interruptor
+#define INTER  5
+unsigned long startTime = 0;
+unsigned long elapseTime = 0;
+
 // Create an array with boolean, size of pin of 74hc595
 boolean registers[NUM_OF_REGISTER_PINS];
 
-//int BAR_LED_PINS[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }; 
 int BAR_LED_PINS[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9  }; 
 
 // Détector HC SR04
@@ -50,7 +54,7 @@ void setup() {
   digitalWrite(PIN_DS,LOW);
   digitalWrite(PIN_STCP,LOW);
   digitalWrite(PIN_SHCP,LOW);
-  digitalWrite(PIN_MR,LOW);
+  switchOff();
 
   
   // initialize digital pin for ultrasonic detector
@@ -67,27 +71,56 @@ void setup() {
   digitalWrite(PIN_LED_10,LOW);
 
   //Initialize registers and leds
-  digitalWrite(PIN_MR,HIGH);
+  switchOn();
   switchOffRegisters();
   switchOffLeds();
   // initialize bar led
   // Welcome animation
   animateBarLed();
-  //Serial.begin(19200);
   }
 
 /** 
   * the loop function runs over and over again forever 
   */
 void loop() {  
-  float distance = readUltrasonicDistance();
-  //Serial.println(distance);
-  if(distance >= 1){    
-    displayLevelBar(getLevelFromDist(distance));
+  
+  startTime = micros(); 
+ 
+  while(digitalRead(INTER) == HIGH){
+    elapseTime = micros() - startTime;
+    Serial.println(elapseTime);
+    if(elapseTime < 500000){
+      switchOn();
+    }else{
+      switchOff();
+      switchOffRegisters();
+    }    
   }
-
+  
+  if(isSwitchedOn()){
+    float distance = readUltrasonicDistance();
+    if(distance >= 1){    
+      displayLevelBar(getLevelFromDist(distance));
+    }
+  }else{
+    switchOffLeds();
+    displayLevelBar(0);
+  }
   delay(5);
-} 
+  
+}
+
+void switchOn(){
+ digitalWrite(PIN_MR,HIGH);
+}
+
+void switchOff(){
+ digitalWrite(PIN_MR,LOW);
+}
+
+boolean isSwitchedOn(){
+ return digitalRead(PIN_MR) == HIGH;
+}
 
 /**
   * Measure distance in cm
@@ -152,7 +185,8 @@ void displayLevelBar(int level){
   * set value recorded in array "registers" and display on the end 
   */
 void writeRegisters(){
- // Until LOW modification will not be apply
+  
+  // Until LOW modification will not be apply
   digitalWrite(PIN_STCP, LOW);
  // loop for aplly all value for each pin 74hc595
   for(int i = NUM_OF_REGISTER_PINS - 1; i >=  0; i--){
