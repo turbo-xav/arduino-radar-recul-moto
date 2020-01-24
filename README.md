@@ -29,3 +29,11 @@ You can find on this repository
 
 ## Useful site :
 - [JLCPPB](https://jlcpcb.com/) : Very useful site to développ PCB from Gerber File.
+
+## Final result
+
+### Rear of motorcycle
+<img src="https://github.com/turbo-xav/arduino-radar-recul-moto/blob/master/photos/IMG_20190909_193647.jpg?raw=true" width="250" />
+
+### Front of motorcycle
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_193700.jpg" width="250" />
