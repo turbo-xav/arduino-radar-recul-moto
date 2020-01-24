@@ -33,7 +33,28 @@ You can find on this repository
 ## Final result
 
 ### Rear of motorcycle
+
 <img src="https://github.com/turbo-xav/arduino-radar-recul-moto/blob/master/photos/IMG_20190909_193647.jpg?raw=true" width="250" />
 
-### Front of motorcycle
+### Front of motorcycle handlebars
+
 <img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_193700.jpg" width="250" />
+
+### Installation under the saddle 
+
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_191302.jpg" width="250" />
+
+### Test of the sensor
+
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_193807.jpg" width="250" />
+
+### Making of the support
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_115003.jpg" width="250" />
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_192144.jpg" width="250" />
+
+### Installation
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_182915.jpg" width="250" />
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_184828.jpg" width="250" />
+<img src="https://raw.githubusercontent.com/turbo-xav/arduino-radar-recul-moto/master/photos/IMG_20190909_184825.jpg" width="250" />
+
+
